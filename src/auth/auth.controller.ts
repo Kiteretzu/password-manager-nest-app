@@ -36,8 +36,6 @@ export class AuthController {
     type: AuthTokenResponseDto,
   })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
-
-  
   @Post('login')
   login(@Body() dto: LoginDto): Promise<{ accessToken: string }> {
     return this.authService.login(dto);
