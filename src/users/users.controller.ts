@@ -10,6 +10,8 @@ import {
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UserResponseDto } from './dto/user-response.dto';
 import { UsersService } from './users.service';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import type { JwtPayload } from 'src/auth/types/jwt-payload.type';
 
 @ApiTags('Users')
 @ApiBearerAuth('access-token')
@@ -27,6 +29,16 @@ export class UsersController {
   @Get()
   findAll() {
     return this.usersService.findAll();
+  }
+
+  @ApiOperation({ summary: 'Get the current user' })
+  @ApiOkResponse({
+    description: 'Current user fetched successfully',
+    type: UserResponseDto,
+  })
+  @Get('me')
+  getCurrentUser(@CurrentUser() user: JwtPayload) {
+    return this.usersService.findOne(user.sub);
   }
 
   @ApiOperation({ summary: 'Get a user by id' })
