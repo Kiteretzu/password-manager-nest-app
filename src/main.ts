@@ -17,10 +17,19 @@ async function bootstrap() {
     .setTitle('Credential Vault API')
     .setDescription('Credential Vault API')
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        description: 'Paste JWT access token here',
+      },
+      'access-token',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup('api', app, document);
 }
-bootstrap();
+void bootstrap();
