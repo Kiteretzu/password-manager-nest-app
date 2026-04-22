@@ -11,8 +11,6 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  await app.listen(process.env.PORT ?? 3000);
-  console.log(`Server is running on port ${process.env.PORT ?? 3000}`);
 
   const config = new DocumentBuilder()
     .setTitle('Credential Vault API')
@@ -32,5 +30,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup('api', app, document);
+  await app.listen(process.env.PORT ?? 3000);
+  console.log(`Server is running on port ${process.env.PORT ?? 3000}`);
 }
 void bootstrap();
